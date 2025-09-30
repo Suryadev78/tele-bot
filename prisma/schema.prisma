@@ -13,3 +13,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  tgId      BigInt   @unique     
+  walletId  String
+  wallet    Wallet[]
+}
+
+
+model Wallet {
+  id     Int @id @default(autoincrement())
+  publicKey String
+  privateKey String
+  userId Int 
+  user User @relation(fields: [userId],references: [id])
+
+}
